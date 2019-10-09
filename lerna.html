@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- https://github.com/lerna/lerna -->
+    <img src="https://cloud.githubusercontent.com/assets/952783/15271604/6da94f96-1a06-11e6-8b04-dc3171f79a90.png" 
+    alt="">
+    <div>A tool for managing JavaScript projects with multiple packages.</div>
+    <img src="https://camo.githubusercontent.com/8c3cfb8ac0ce2d1ea0dc4712cc339cacd8d96f19/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f6c65726e612e7376673f7374796c653d666c6174" 
+    alt="">
+    <img src="https://camo.githubusercontent.com/0a9bc32ce1b01436b3b73ce151f804baa6ba1da1/68747470733a2f2f696d672e736869656c64732e696f2f7472617669732f6c65726e612f6c65726e612f6d61737465722e7376673f7374796c653d666c6174266c6162656c3d747261766973" 
+    alt="">
+    <ul>
+        <li>
+            <a href="http://baidu.com">about</a>
+        </li>
+        <li>
+            <a href="http://baidu.com">Getting Started</a>
+        </li>
+        <li>
+            <a href="http://baidu.com">How It Works</a>
+        </li>
+        <li>
+            <a href="http://baidu.com">Troubleshooting</a>
+        </li>
+        <li>
+            commands
+            <ul>
+                <li><code><a href="http://baidu.com">lerna publish</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 1</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 2</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 3</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 4</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 5</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 6</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 7</a></code></li>
+                <li><code><a href="http://baidu.com">lerna 8</a></code></li>
+            </ul>
+        </li>
+        <li><a href="http://baidu.com">Concepts</a></li>
+        <li><a href="http://baidu.com">Lerna.json</a></li>
+        <li><a href="http://baidu.com">Global Flags</a></li>
+        <li><a href="http://baidu.com">Filter Flags</a></li>
+
+    </ul>
+    <h2>About</h2>
+    <hr>
+    <p>Splitting up large codebases into separate independently versioned packages is extremely useful for code sharing. However, making changes across many repositories is messy and difficult to track, and testing across repositories gets complicated really fast.</p>
+    <p>To solve these (and many other) problems, 
+        some projects will organize their codebases into 
+        multi-package repositories (sometimes called 
+        <a href="http://baidu.com">monorepos</a> ).Projects like
+        <a href="http://baidu.com">Babel</a> , 
+        <a href="http://baidu.com">React</a> , 
+        <a href="http://baidu.com">Angular</a> , 
+        <a href="http://baidu.com">Ember</a> ,
+        <a href="http://baidu.com">Meteor</a> ,
+        Jest, and many others develop all of their packages 
+        within a single repository.
+    </p>
+    <p>
+        <b>Lerna is a tool that optimizes the workflow around managing multi-package repositories with git and npm.</b>
+    </p>
+    <p>
+        Lerna can also reduce the time and space requirements for numerous copies of packages in development and build environments - normally a downside of dividing a project into many separate NPM packages. See the hoist documentation for details.
+    </p>
+    <h3>What does a Lerna repo look like?</h3>
+    <p>
+        There's actually very little to it. You have a file structure that looks like this:
+    </p>
+    <pre>
+my-lerna-repo/
+package.json
+packages/
+    package-1/
+    package.json
+    package-2/
+    package.json
+    </pre>
+    <h3>What can Lerna do?</h3>
+    <p>
+        The two primary commands in Lerna are <code>lerna bootstrap</code> and <code>lerna publish</code>.
+    </p>
+    <p>
+            <code>bootstrap</code> will link dependencies in the repo together. <code>publish</code> will help publish any updated packages.
+    </p>
+    <h3>What can't Lerna do?</h3>
+    <p>Lerna is not a deployment tool for serverless monorepos. Hoisting might be incompatible with traditional serverless monorepo deployment techniques.</p>
+    <h2>Getting Started</h2>
+    <hr>
+    <div>
+        The instructions below are for Lerna 3.x. We recommend using it instead of 2.x for a new Lerna project.
+    </div>
+    <p>Let's start by installing Lerna as a dev dependency of your project with <a href="###">npm</a>.</p>
+    <pre>
+    $ mkdir lerna-repo && cd $_
+    $ npx lerna init
+    </pre>
+    <p>This will create a lerna.json configuration file as well as a packages folder, so your folder should now look like this:</p>
+    <pre>
+        lerna-repo/
+        packages/
+        package.json
+        lerna.json
+    </pre>
+    <h2>How It Works</h2>
+    <hr>
+    <p>Lerna allows you to manage your project using one of two modes: Fixed or Independent.</p>
+    <h3>Fixed/Locked mode (default)</h3>
+    <p>Fixed mode Lerna projects operate on a single version line. The version is kept in the lerna.json file at the root of your project under the version key. When you run lerna publish, if a module has been updated since the last time a release was made, it will be updated to the new version you're releasing. This means that you only publish a new version of a package when you need to.</p>
+    <p>
+        This is the mode that <a href="###">Babel</a> is currently using. Use this if you want to automatically tie all package versions together. One issue with this approach is that a major change in any package will result in all packages having a new major version.
+    </p>
+    <h3>Independent mode</h3>
+    <pre>
+        lerna init --independent
+    </pre>
+    <p>Independent mode Lerna projects allows maintainers to increment package versions independently of each other. Each time you publish, you will get a prompt for each package that has changed to specify if it's a patch, minor, major or custom change.</p>
+    <p>Independent mode allows you to more specifically update versions for each package and makes sense for a group of components. Combining this mode with something like <a href="###">semantic-release</a> would make it less painful. (There is work on this already at <a href="###">atlassian/lerna-semantic-release</a> ).</p>
+    <div>
+        Set the version key in lerna.json to independent to run in independent mode.
+    </div>
+    <h2>Troubleshooting</h2>
+    <hr>
+    <p>
+        If you encounter any issues while using Lerna please check out our <a href="###">Troubleshooting</a> document where you might find the answer to your problem.
+    </p>
+    <h2>Frequently asked questions</h2>
+    <hr>
+    <p>See <a href="###">FAQ.md.</a></p>
+    <h2>Concepts</h2>
+    <hr>
+    <p>Lerna will log to a <code>lerna-debug.log file (same as npm-debug.log)</code> when it encounters an error running a command.</p>
+    <p>Lerna also has support for <a href="###">scoped packages</a>.</p>
+    <p>Run <code>lerna --help</code> to see all available commands and options.</p>
+    <h3>lerna.json</h3>
+    <pre>
+    {
+        "version": "1.1.3",
+        "npmClient": "npm",
+        "command": {
+            "publish": {
+            "ignoreChanges": ["ignored-file", "*.md"],
+            "message": "chore(release): publish"
+            },
+            "bootstrap": {
+            "ignore": "component-*",
+            "npmClientArgs": ["--no-package-lock"]
+            }
+        },
+        "packages": ["packages/*"]
+        }
+    </pre>
+    <ul>
+        <li><code>version</code>: the current version of the repository.</li>
+        <li><code>npmClient</code>: an option to specify a specific client to run commands with (this can also be specified on a per command basis). Change to " <code>yarn</code> " to run all commands with yarn. Defaults to "npm".</li>
+        <li><code>command.publish.ignoreChanges</code>: an array of globs that won't be included in lerna changed/publish. Use this to prevent publishing a new version unnecessarily for changes, such as fixing a <code>README.md</code> typo.</li>
+        <li><code>command.publish.message</code>: a custom commit message when performing version updates for publication. See <a href="###">@lerna/version</a> for more details.</li>
+        <li><code>command.bootstrap.ignore</code>: an array of globs that won't be bootstrapped when running the <code>lerna bootstrap</code> command.</li>
+        <li><code>command.bootstrap.npmClientArgs</code>: array of strings that will be passed as arguments directly to <code>npm</code> install during the <code>lerna bootstrap</code> command.</li>
+        <li><code>command.bootstrap.scope</code>: an array of globs that restricts which packages will be bootstrapped when running the <code>lerna bootstrap</code> command.</li>
+        <li><code>packages</code>: Array of globs to use as package locations.</li>
+    </ul>
+    <p>
+        The packages config in lerna.json is a list of globs that match directories containing a <code>package.json</code>, which is how lerna recognizes "leaf" packages (vs the "root" <code>package.json</code>, which is intended to manage the dev dependencies and scripts for the entire repo).
+    </p>
+    <p>
+        By default, lerna initializes the packages list as [<code>"packages/*"</code>], but you can also use another directory such as [<code>"modules/*"</code>], or [<code>"package1"</code>, <code>"package2"</code>]. The globs defined are relative to the directory that <code>lerna.json</code> lives in, which is usually the repository root. The only restriction is that you can't directly nest package locations, but this is a restriction shared by "normal" npm packages as well.
+    </p>
+    <p>
+        For example, [<code>"packages/*"</code>, <code>"src/**"</code>] matches this tree:
+    </p>
+    <pre>
+    packages/
+    ├── foo-pkg
+    │   └── package.json
+    ├── bar-pkg
+    │   └── package.json
+    ├── baz-pkg
+    │   └── package.json
+    └── qux-pkg
+        └── package.json
+    src/
+    ├── admin
+    │   ├── my-app
+    │   │   └── package.json
+    │   ├── stuff
+    │   │   └── package.json
+    │   └── things
+    │       └── package.json
+    ├── profile
+    │   └── more-things
+    │       └── package.json
+    ├── property
+    │   ├── more-stuff
+    │   │   └── package.json
+    │   └── other-things
+    │       └── package.json
+    └── upload
+        └── other-stuff
+            └── package.json
+    </pre>
+    <p>
+        Locating leaf packages under <code>packages/*</code> is considered a "best-practice", but is not a requirement for using Lerna.
+    </p>
+    <h4>Legacy Fields</h4>
+    <p>Some lerna.json fields are no longer in use. Those of note include:</p>
+    <ul>
+        <li><code>lerna</code>: originally used to indicate the current version of Lerna. <a href="###">Made obsolete</a> and <a href="###">removed</a> in v3</li>
+    </ul>
+    <h3>Common devDependencies</h3>
+    <p>Most <code>devDependencies</code> can be pulled up to the root of a Lerna repo with <code>lerna link convert</code></p>
+    <p>The above command will automatically hoist things and use relative file: specifiers.</p>
+    <p>Hoisting has a few benefits:</p>
+    <ul>
+        <li>All packages use the same version of a given dependency</li>
+        <li>Can keep dependencies at the root up-to-date with an automated tool such as <a href="###">GreenKeeper</a></li>
+        <li>Dependency installation time is reduced</li>
+        <li>Less storage is needed</li>
+    </ul>
+    <p>
+        Note that <code>devDependencies</code> providing "binary" executables that are used by npm scripts still need to be installed directly in each package where they're used.
+    </p>
+    <p>
+        For example the <code>nsp</code> dependency is necessary in this case for <code>lerna run nsp</code> (and <code>npm run nsp</code> within the package's directory) to work correctly:
+    </p>
+    <pre>
+    {
+        "scripts": {
+            "nsp": "nsp"
+        },
+        "devDependencies": {
+            "nsp": "^2.3.3"
+        }
+        }
+    </pre>
+    <h3>Git Hosted Dependencies</h3>
+    <p>
+        Lerna allows target versions of local dependent packages to be written as a <a href="###">git remote url</a> with a <code>committish</code> (e.g.,<code>#v1.0.0 or #semver:^1.0.0</code>) instead of the normal numeric version range. This allows packages to be distributed via git repositories when packages must be private and a <a href="###">private npm registry is not desired.</a>
+    </p>
+    <p>
+        Please note that lerna does <code>not</code> perform the actual splitting of git history into the separate read-only repositories. This is the responsibility of the user. (See <a href="###">this comment</a> for implementation details)
+    </p>
+    <pre>
+    // packages/pkg-1/package.json
+    {
+        name: "pkg-1",
+        version: "1.0.0",
+        dependencies: {
+        "pkg-2": "github:example-user/pkg-2#v1.0.0"
+        }
+    }
+    
+    // packages/pkg-2/package.json
+    {
+        name: "pkg-2",
+        version: "1.0.0"
+    }
+    </pre>
+    <p>In the example above,</p>
+    <ul>
+        <li><code>lerna bootstrap will properly symlink pkg-2 into pkg-1.</code></li>
+        <li><code>lerna publish will update the committish (#v1.0.0) in pkg-1 when pkg-2 changes.</code></li>
+    </ul>
+    <h3>README Badge</h3>
+    <p>Using Lerna? Add a README badge to show it off: <img src="https://camo.githubusercontent.com/ecafd86d8356a1adc60fb4fd393bcc7584187f99/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6d61696e7461696e6564253230776974682d6c65726e612d6363303066662e737667" alt=""> </p>
+    <pre>[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)</pre>
+    <h3>Wizard</h3>
+    <p>If you prefer some guidance for cli (in case you're about to start using lerna or introducing it to a new team), you might like <a href="###">lerna-wizard</a>. It will lead you through a series of well-defined steps:</p>
+    <img src="https://raw.githubusercontent.com/szarouski/lerna-wizard/2e269fb5a3af7100397a1f874cea3fa78089486e/demo.png" alt="">
+</body>
+</html>
